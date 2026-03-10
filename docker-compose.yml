@@ -1,7 +1,7 @@
 services:
   web-ltkk:
     build:
-      context: ./ltkk-app
+      context: .
       dockerfile: Dockerfile
     container_name: web-ltkk
     restart: unless-stopped

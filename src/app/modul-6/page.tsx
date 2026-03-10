@@ -2,6 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import SectionCard from '@/components/SectionCard';
 import CrystalFieldDiagram from '@/components/CrystalFieldDiagram';
+import TanabeSuganoDiagram from '@/components/TanabeSuganoDiagram';
 import SpectrochemicalSeries from '@/components/SpectrochemicalSeries';
 import WavelengthColor from '@/components/WavelengthColor';
 import ThinkReveal from '@/components/ThinkReveal';
@@ -145,6 +146,16 @@ export default function Modul6() {
               </p>
             </ThinkReveal>
           </div>
+        </SectionCard>
+
+        {/* 3. Tanabe-Sugano Diagram */}
+        <SectionCard title="Diagram Tanabe-Sugano (d³)" icon="📈" accent="border-violet-500">
+          <p className="text-sm text-gray-600 mb-3">
+            Diagram Tanabe-Sugano menggambarkan energi keadaan elektronik (E/B) sebagai fungsi
+            dari kekuatan medan kristal (Δ/B). Untuk ion <KaTeX math="d^3" /> seperti Cr³⁺,
+            keadaan dasar adalah <KaTeX math="^4A_{2g}" /> (dari suku <KaTeX math="^4F" />).
+          </p>
+          <TanabeSuganoDiagram />
         </SectionCard>
 
         {/* 4. Spectrochemical Series */}
