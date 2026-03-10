@@ -14,13 +14,13 @@ const VaporDiffusion = () => {
   const crystalScale = isDiffusing ? 1 : 0;
 
   return (
-    <div className="w-full flex justify-center py-6 bg-white overflow-visible border border-slate-200 rounded-xl mt-6 relative shadow-sm">
-      <div className="text-center w-full max-w-2xl px-4 relative z-10">
-        <h3 className="font-bold text-gray-800 mb-2 sm:text-lg">Schematic of Vapor Diffusion Crystallization</h3>
-        <p className="text-xs text-gray-500 mb-6">Klik &quot;Mulai Difusi Uap&quot; untuk melihat simulasi pergerakan uap (vapor) masuk ke dalam larutan sampel hingga terbentuk kristal.</p>
+    <div className="w-full flex justify-center py-4 sm:py-6 bg-white overflow-hidden border border-slate-200 rounded-xl mt-6 relative shadow-sm">
+      <div className="text-center w-full max-w-2xl px-3 sm:px-4 relative z-10">
+        <h3 className="font-bold text-gray-800 mb-2 text-base sm:text-lg">Schematic of Vapor Diffusion Crystallization</h3>
+        <p className="text-xs text-gray-500 mb-4 sm:mb-6">Klik &quot;Mulai Difusi Uap&quot; untuk melihat simulasi pergerakan uap (vapor) masuk ke dalam larutan sampel hingga terbentuk kristal.</p>
         
-        <div className="relative inline-block w-full max-w-md aspect-[5/4] sm:aspect-video mx-auto">
-          <svg viewBox="-50 0 600 400" className="w-full h-full drop-shadow-sm bg-transparent rounded-lg" style={{ overflow: 'visible' }}>
+        <div className="relative inline-block w-full max-w-md mx-auto">
+          <svg viewBox="-50 0 600 400" className="w-full h-auto drop-shadow-sm bg-transparent rounded-lg" style={{ overflow: 'visible' }}>
             <defs>
               <linearGradient id="antiSolvent2" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#bee3f8" stopOpacity="0.8" />
@@ -60,6 +60,9 @@ const VaporDiffusion = () => {
                     stroke-dasharray: 6 12;
                     animation: ${isDiffusing ? 'vaporMoveLine 2s linear infinite' : 'none'};
                     opacity: ${isDiffusing ? '1' : '0'};
+                  }
+                  @media (max-width: 639px) {
+                    .svg-annotations { display: none; }
                   }
                 `}
               </style>
@@ -146,7 +149,7 @@ const VaporDiffusion = () => {
             <rect x="145" y="30" width="210" height="5" rx="2" fill="#cbd5e1" stroke="#475569" strokeWidth="2" />
 
             {/* Static Annotations / Labels */}
-            <g className="text-[13px] font-bold fill-slate-800" textAnchor="start">
+            <g className="svg-annotations text-[13px] font-bold fill-slate-800" textAnchor="start">
               {/* Left Label */}
               <text x="20" y="185">Vapor</text>
               <path d="M 70,180 L 120,180" stroke="#0f172a" strokeWidth="2" markerEnd="url(#arrowHeadBlack)" />
@@ -186,6 +189,38 @@ const VaporDiffusion = () => {
               />
             ))}
           </svg>
+        </div>
+
+        {/* Mobile legend - shown below SVG on small screens */}
+        <div className="sm:hidden mt-3 grid grid-cols-2 gap-2 text-left text-xs">
+          <div className="flex items-start gap-2 p-2 bg-blue-50 rounded-lg">
+            <span className="w-3 h-3 mt-0.5 rounded-full bg-blue-300 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-gray-700">Anti-solvent</p>
+              <p className="text-gray-500">Volatile (e.g., Ethanol)</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 p-2 bg-red-50 rounded-lg">
+            <span className="w-3 h-3 mt-0.5 rounded-full bg-red-400 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-gray-700">Sample Solution</p>
+              <p className="text-gray-500">In good solvent (e.g., Water)</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 p-2 bg-gray-50 rounded-lg">
+            <span className="w-3 h-3 mt-0.5 rounded-full bg-gray-400 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-gray-700">Vapor</p>
+              <p className="text-gray-500">Diffuses into inner vial</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 p-2 bg-red-50 rounded-lg">
+            <span className="w-3 h-3 mt-0.5 rounded-sm bg-red-800 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-gray-700">Crystals</p>
+              <p className="text-gray-500">Forming inside sample</p>
+            </div>
+          </div>
         </div>
 
         <div className="mt-2 mb-6">

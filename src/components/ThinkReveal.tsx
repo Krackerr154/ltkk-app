@@ -19,7 +19,7 @@ export default function ThinkReveal({ question, children }: ThinkRevealProps) {
       {!revealed ? (
         <button
           onClick={() => setRevealed(true)}
-          className="w-full p-3 text-sm text-indigo-600 hover:bg-indigo-50 transition-colors font-medium"
+          className="w-full p-3 sm:p-3 text-sm text-indigo-600 hover:bg-indigo-50 active:bg-indigo-100 transition-colors font-medium"
         >
           Tap to reveal explanation →
         </button>

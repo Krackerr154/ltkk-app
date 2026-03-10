@@ -25,6 +25,14 @@ const wedges: ColorWedge[] = [
 
 export default function InteractiveColorWheel() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [tappedIndex, setTappedIndex] = useState<number | null>(null);
+
+  // On mobile, use tap; on desktop, use hover
+  const activeIndex = tappedIndex ?? hoveredIndex;
+
+  const handleTap = (i: number) => {
+    setTappedIndex(prev => prev === i ? null : i);
+  };
 
   // Calculate SVG paths (Arc)
   const createWedge = (start: number, end: number, radius: number) => {
@@ -39,20 +47,20 @@ export default function InteractiveColorWheel() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-6">
-      <div className="relative">
-        <svg width="300" height="300" viewBox="0 0 300 300">
+    <div className="flex flex-col items-center justify-center gap-6 py-6 md:flex-row md:gap-8">
+      <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
+        <svg viewBox="0 0 300 300" className="w-full h-auto">
           {wedges.map((w, i) => {
-            const isHovered = hoveredIndex === i;
+            const isHovered = activeIndex === i;
             // The complement wedge index: it's opposite, so +4 mod 8
             const compIndex = (i + 4) % 8;
-            const isComplement = hoveredIndex === compIndex;
+            const isComplement = activeIndex === compIndex;
             
             let radius = 130;
             if (isHovered) radius = 145;
             if (isComplement) radius = 140;
 
-            const opacity = hoveredIndex === null ? 1 : (isHovered || isComplement ? 1 : 0.3);
+            const opacity = activeIndex === null ? 1 : (isHovered || isComplement ? 1 : 0.3);
 
             return (
               <path
@@ -68,6 +76,7 @@ export default function InteractiveColorWheel() {
                 }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => handleTap(i)}
               />
             );
           })}
@@ -77,41 +86,43 @@ export default function InteractiveColorWheel() {
 
         {/* Center Text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-center">
-          {hoveredIndex !== null ? (
+          {activeIndex !== null ? (
             <div className="w-16">
               <span className="block text-xl font-bold">↔</span>
             </div>
           ) : (
             <div className="text-gray-400 text-xs font-medium px-2">
-              Arahkan ke<br/>warna
+              <span className="hidden sm:inline">Arahkan ke<br/>warna</span>
+              <span className="sm:hidden">Ketuk<br/>warna</span>
             </div>
           )}
         </div>
       </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 min-w-[240px] h-[160px] flex flex-col justify-center">
-        {hoveredIndex !== null ? (
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 w-full sm:min-w-[240px] sm:w-auto min-h-[140px] sm:h-[160px] flex flex-col justify-center">
+        {activeIndex !== null ? (
           <div>
             <div className="mb-3">
               <span className="text-xs uppercase font-semibold text-gray-500">Warna Diserap</span>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" style={{ backgroundColor: wedges[hoveredIndex].color }}></div>
-                <span className="font-bold text-gray-800">{wedges[hoveredIndex].name}</span>
+                <div className="w-4 h-4 rounded-full border border-gray-300 shadow-sm flex-shrink-0" style={{ backgroundColor: wedges[activeIndex].color }}></div>
+                <span className="font-bold text-gray-800">{wedges[activeIndex].name}</span>
               </div>
-              <p className="text-xs text-gray-600 mt-1">Sinar masuk: <span className="font-mono bg-white px-1 border rounded">{wedges[hoveredIndex].absorbedNm}</span></p>
+              <p className="text-xs text-gray-600 mt-1">Sinar masuk: <span className="font-mono bg-white px-1 border rounded">{wedges[activeIndex].absorbedNm}</span></p>
             </div>
             
             <div>
               <span className="text-xs uppercase font-semibold text-gray-500">Warna Tampak (Komplementer)</span>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" style={{ backgroundColor: wedges[(hoveredIndex + 4) % 8].color }}></div>
-                <span className="font-bold text-gray-800 text-sm mt-0.5">{wedges[(hoveredIndex + 4) % 8].name}</span>
+                <div className="w-4 h-4 rounded-full border border-gray-300 shadow-sm flex-shrink-0" style={{ backgroundColor: wedges[(activeIndex + 4) % 8].color }}></div>
+                <span className="font-bold text-gray-800 text-sm mt-0.5">{wedges[(activeIndex + 4) % 8].name}</span>
               </div>
             </div>
           </div>
         ) : (
           <div className="text-center text-gray-500 text-sm">
-            Arahkan kursor ke roda warna untuk melihat hubungan warna yang diserap dan warna yang tampak.
+            <span className="hidden sm:inline">Arahkan kursor ke roda warna untuk melihat hubungan warna yang diserap dan warna yang tampak.</span>
+            <span className="sm:hidden">Ketuk warna pada roda untuk melihat hubungan warna yang diserap dan warna yang tampak.</span>
           </div>
         )}
       </div>

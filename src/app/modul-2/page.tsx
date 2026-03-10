@@ -10,8 +10,8 @@ import VaporDiffusion from '@/components/VaporDiffusion';
 
 export default function Modul2() {
   return (
-    <main className="min-h-screen p-4 sm:p-6">
-      <div className="max-w-3xl mx-auto space-y-6 pb-12">
+    <main className="min-h-screen p-3 sm:p-4 md:p-6">
+      <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6 pb-12">
         <header className="space-y-2 pt-4">
           <p className="text-sm text-teal-600 font-medium">Modul 2</p>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
@@ -55,7 +55,7 @@ export default function Modul2() {
             Tiga ligan yang digunakan dalam sintesis kompleks Cr(III).
             Lingkaran hijau putus-putus menunjukkan <strong>atom donor</strong> yang berkoordinasi ke ion logam.
           </p>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="bg-gray-50 p-3 rounded-lg flex flex-col items-center">
               <LigandStructure ligand="oxalate" />
             </div>
@@ -167,7 +167,7 @@ export default function Modul2() {
             Warna kompleks Cr(III) bergantung pada jenis ligan karena perbedaan energi pemisahan medan kristal{' '}
             <KaTeX math="\Delta_0" /> menyebabkan penyerapan cahaya pada panjang gelombang yang berbeda.
           </p>
-          <div className="grid sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
             <ColorSwatch
               color="#2d8c7f"
               label="K₃[Cr(ox)₃]·3H₂O"

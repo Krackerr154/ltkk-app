@@ -38,14 +38,14 @@ export default function CrystalFieldDiagram({ delta, highlightLigand }: CrystalF
   };
 
   return (
-    <div className="p-5 bg-white border border-gray-200 rounded-xl shadow-sm">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+    <div className="p-4 sm:p-5 bg-white border border-gray-200 rounded-xl shadow-sm">
+      <div className="flex flex-col gap-3 mb-4">
         <p className="text-sm font-bold text-gray-800">Pemisahan Medan Kristal Oktahedral — Cr³⁺ (d³)</p>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={handleExcite}
             disabled={isExcited || photonType !== 'none'}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
+            className={`px-3 py-2 text-xs font-semibold rounded-md transition-all ${
               isExcited || photonType !== 'none'
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
               : 'bg-amber-100 text-amber-700 hover:bg-amber-200 active:scale-95'
@@ -56,7 +56,7 @@ export default function CrystalFieldDiagram({ delta, highlightLigand }: CrystalF
           <button
             onClick={handleDeexcite}
             disabled={!isExcited || photonType !== 'none'}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
+            className={`px-3 py-2 text-xs font-semibold rounded-md transition-all ${
               !isExcited || photonType !== 'none'
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
               : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 active:scale-95'
@@ -67,8 +67,8 @@ export default function CrystalFieldDiagram({ delta, highlightLigand }: CrystalF
         </div>
       </div>
 
-      <div className="relative">
-        <svg viewBox="0 0 520 340" className="w-full max-w-lg mx-auto overflow-visible" xmlns="http://www.w3.org/2000/svg">
+      <div className="relative overflow-x-auto">
+        <svg viewBox="0 0 520 340" className="w-full min-w-[320px] mx-auto overflow-visible" xmlns="http://www.w3.org/2000/svg">
           {/* Background */}
           <rect width="520" height="340" fill="#f8fafc" rx="12" />
 

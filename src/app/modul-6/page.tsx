@@ -69,8 +69,8 @@ export default function Modul6() {
   }, [complexes]);
 
   return (
-    <main className="min-h-screen p-4 sm:p-6">
-      <div className="max-w-3xl mx-auto space-y-6 pb-12">
+    <main className="min-h-screen p-3 sm:p-4 md:p-6">
+      <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6 pb-12">
         <header className="space-y-2 pt-4">
           <p className="text-sm text-teal-600 font-medium">Modul 6</p>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
@@ -178,23 +178,23 @@ export default function Modul6() {
                   <span className="text-xs text-gray-400">— {c.ligand}</span>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">
                       λ_max (nm)
                     </label>
                     <input
                       type="number"
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:outline-none text-sm"
+                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:outline-none text-sm"
                       value={c.lambdaMax}
                       min={300}
                       max={800}
                       onChange={(e) => updateLambda(i, Number(e.target.value))}
                     />
                   </div>
-                  <div className="flex-1">
+                  <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Δ₀ (kJ/mol)</label>
-                    <div className="p-2 bg-teal-50 border border-teal-200 rounded-lg text-sm font-bold text-teal-800">
+                    <div className="p-2.5 bg-teal-50 border border-teal-200 rounded-lg text-sm font-bold text-teal-800">
                       {calcDelta(c.lambdaMax).toFixed(2)}
                     </div>
                   </div>
@@ -209,12 +209,12 @@ export default function Modul6() {
           {/* Ranking */}
           <div className="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
             <p className="text-sm font-semibold text-orange-800 mb-2">Urutan Kekuatan Ligan (berdasarkan Δ₀):</p>
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               {results.map((r, i) => (
                 <React.Fragment key={r.index}>
-                  <div className="flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-orange-200">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: r.color }} />
-                    <span className="text-xs font-medium text-gray-700">{r.ligand}</span>
+                  <div className="flex items-center gap-1 bg-white px-2 py-1.5 sm:px-2.5 rounded-lg border border-orange-200">
+                    <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: r.color }} />
+                    <span className="text-xs font-medium text-gray-700 whitespace-nowrap">{r.ligand}</span>
                     <span className="text-xs text-gray-400">({r.delta.toFixed(1)})</span>
                   </div>
                   {i < results.length - 1 && <span className="text-gray-400 text-xs">&lt;</span>}

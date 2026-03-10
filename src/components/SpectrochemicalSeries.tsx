@@ -25,22 +25,22 @@ const sortedLigands = [...ligands].sort((a, b) => a.strength - b.strength);
 
 export default function SpectrochemicalSeries() {
   return (
-    <div className="p-4 bg-white border border-gray-200 rounded-lg">
+    <div className="p-3 sm:p-4 bg-white border border-gray-200 rounded-lg">
       <p className="text-sm font-semibold text-gray-700 mb-1">Spectrochemical Series</p>
       <p className="text-xs text-gray-500 mb-4">Weak field → Strong field (left to right). <span className="text-teal-600 font-medium">Highlighted</span> = ligands used in this practicum.</p>
       
       <div className="relative">
         {/* Gradient bar */}
-        <div className="h-3 rounded-full bg-gradient-to-r from-red-400 via-yellow-400 to-blue-500 mb-4" />
+        <div className="h-2.5 sm:h-3 rounded-full bg-gradient-to-r from-red-400 via-yellow-400 to-blue-500 mb-4" />
         
         {/* Arrow */}
-        <div className="flex justify-between text-xs text-gray-400 mb-4 -mt-1">
-          <span>← Weak field (small Δ₀)</span>
-          <span>Strong field (large Δ₀) →</span>
+        <div className="flex justify-between text-[10px] sm:text-xs text-gray-400 mb-3 sm:mb-4 -mt-1">
+          <span>← Weak field</span>
+          <span>Strong field →</span>
         </div>
 
         {/* Ligand pills */}
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
           {sortedLigands.map((l) => (
             <span
               key={l.symbol}

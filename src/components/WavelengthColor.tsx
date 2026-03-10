@@ -101,24 +101,24 @@ export default function WavelengthColor({ wavelength }: WavelengthColorProps) {
   const appName = getApparentColorName(wavelength);
 
   return (
-    <div className="flex gap-4 items-center p-3 bg-gray-50 rounded-lg">
-      <div className="text-center">
+    <div className="flex gap-3 sm:gap-4 items-center p-3 bg-gray-50 rounded-lg">
+      <div className="text-center flex-1 min-w-0">
         <div
-          className="w-14 h-14 rounded-full border-2 border-white shadow-md mx-auto"
+          className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-2 border-white shadow-md mx-auto"
           style={{ backgroundColor: absorbedColor }}
         />
         <p className="text-xs text-gray-500 mt-1">Absorbed</p>
-        <p className="text-xs font-medium text-gray-700">{absName}</p>
+        <p className="text-xs font-medium text-gray-700 truncate">{absName}</p>
         <p className="text-xs text-gray-400">{wavelength} nm</p>
       </div>
-      <div className="text-gray-300 text-xl">→</div>
-      <div className="text-center">
+      <div className="text-gray-300 text-lg sm:text-xl flex-shrink-0">→</div>
+      <div className="text-center flex-1 min-w-0">
         <div
-          className="w-14 h-14 rounded-full border-2 border-white shadow-md mx-auto"
+          className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-2 border-white shadow-md mx-auto"
           style={{ backgroundColor: apparentColor }}
         />
         <p className="text-xs text-gray-500 mt-1">Appears as</p>
-        <p className="text-xs font-medium text-gray-700">{appName}</p>
+        <p className="text-xs font-medium text-gray-700 truncate">{appName}</p>
       </div>
     </div>
   );

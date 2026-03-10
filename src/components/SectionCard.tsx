@@ -30,11 +30,11 @@ export default function SectionCard({
     <section className={`bg-white rounded-2xl shadow-sm border border-gray-100 border-l-4 ${accent} overflow-hidden transition-shadow hover:shadow-md`}>
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between p-5 sm:p-6 text-left hover:bg-gray-50/50 transition-colors group"
+        className="w-full flex items-center justify-between p-4 sm:p-5 md:p-6 text-left hover:bg-gray-50/50 active:bg-gray-50 transition-colors group"
         aria-expanded={open}
       >
-        <h2 className="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2.5">
-          {icon && <span className="text-lg">{icon}</span>}
+        <h2 className="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2 sm:gap-2.5">
+          {icon && <span className="text-base sm:text-lg">{icon}</span>}
           {title}
         </h2>
         <div className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
@@ -58,7 +58,7 @@ export default function SectionCard({
           opacity: open ? 1 : 0,
         }}
       >
-        <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">{children}</div>
+        <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 space-y-4">{children}</div>
       </div>
     </section>
   );
