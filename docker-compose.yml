@@ -1,0 +1,12 @@
+services:
+  web-ltkk:
+    build:
+      context: ./ltkk-app
+      dockerfile: Dockerfile
+    container_name: web-ltkk
+    restart: unless-stopped
+    ports:
+      - "3007:3000"
+    environment:
+      - TZ=Asia/Jakarta
+      - NODE_ENV=production
