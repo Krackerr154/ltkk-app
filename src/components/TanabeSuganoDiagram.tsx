@@ -19,104 +19,108 @@ interface TSLine {
 }
 
 const lines: TSLine[] = [
-  // --- Ground state: ⁴A₂ (from ⁴F) along x-axis ---
   {
-    label: '⁴A₂',
+    label: '⁴A₂g',
     superscript: '4',
-    subscript: 'A₂',
+    subscript: 'A₂g',
     freeIonTerm: '⁴F',
-    points: [[0, 0], [0.5, 0], [1, 0], [1.5, 0], [2, 0], [2.5, 0], [3, 0], [3.5, 0], [4, 0]],
-    color: '#1a1a1a',
+    points: [[0, 0], [40, 0]],
+    color: '#00bcd4',
   },
-  // --- ⁴T₂ (from ⁴F) ---
   {
-    label: '⁴T₂',
+    label: '⁴T₂g',
     superscript: '4',
-    subscript: 'T₂',
+    subscript: 'T₂g',
     freeIonTerm: '⁴F',
-    points: [[0, 0], [0.5, 5.5], [1, 11], [1.5, 16.5], [2, 22], [2.5, 27.5], [3, 33], [3.5, 38.5], [4, 42]],
-    color: '#1a1a1a',
+    points: [[0, 0], [40, 40]],
+    color: '#00bcd4',
   },
-  // --- ⁴T₁(F) (from ⁴F) ---
   {
-    label: '⁴T₁',
+    label: '⁴T₁g',
     superscript: '4',
-    subscript: 'T₁',
+    subscript: 'T₁g',
     freeIonTerm: '⁴F',
-    points: [[0, 0], [0.5, 9], [1, 17.5], [1.5, 25], [2, 32], [2.5, 39], [3, 46], [3.5, 52], [4, 57]],
-    color: '#1a1a1a',
+    points: [[0, 0], [5, 9], [10, 16.5], [15, 24], [20, 31], [25, 36.5], [30, 42.2], [35, 46.8], [40, 51]],
+    color: '#00bcd4',
   },
-  // --- ⁴T₁(P) (from ⁴P) — starts higher ---
   {
-    label: '⁴T₁',
+    label: '⁴T₁g',
     superscript: '4',
-    subscript: 'T₁',
+    subscript: 'T₁g',
     freeIonTerm: '⁴P',
-    points: [[0, 15], [0.5, 19], [1, 24], [1.5, 30], [2, 37], [2.5, 44.5], [3, 53], [3.5, 63], [4, 72]],
-    color: '#1a1a1a',
+    points: [[0, 15], [5, 19.5], [10, 25.5], [15, 31.5], [20, 38.5], [25, 46.2], [30, 54], [35, 62], [38, 70]],
+    color: '#00bcd4',
   },
-  // --- ²E (from ²G) ---
   {
-    label: '²E',
+    label: '²Eg',
     superscript: '2',
-    subscript: 'E',
+    subscript: 'Eg',
     freeIonTerm: '²G',
-    points: [[0, 17], [0.5, 18.5], [1, 20], [1.5, 21], [2, 21.5], [2.5, 22], [3, 22.5], [3.5, 23], [4, 23.5]],
-    color: '#555555',
+    points: [[0, 17], [10, 19.2], [20, 20.6], [30, 21.2], [40, 21.5]],
+    color: '#9333ea',
     dashed: true,
   },
-  // --- ²T₁ (from ²G) ---
   {
-    label: '²T₁',
+    label: '²T₁g',
     superscript: '2',
-    subscript: 'T₁',
+    subscript: 'T₁g',
     freeIonTerm: '²G',
-    points: [[0, 17], [0.5, 18], [1, 20], [1.5, 21.5], [2, 22.5], [2.5, 23.5], [3, 24], [3.5, 24.5], [4, 25]],
-    color: '#555555',
+    points: [[0, 17], [10, 20.3], [20, 21.7], [30, 22.3], [40, 22.5]],
+    color: '#9333ea',
     dashed: true,
   },
-  // --- ²T₂ (from ²G → ²H area) ---
   {
-    label: '²T₂',
+    label: '²T₂g',
     superscript: '2',
-    subscript: 'T₂',
+    subscript: 'T₂g',
     freeIonTerm: '²G',
-    points: [[0, 17], [0.5, 19.5], [1, 23], [1.5, 26], [2, 28.5], [2.5, 30.5], [3, 32], [3.5, 33.5], [4, 35]],
-    color: '#555555',
+    points: [[0, 17], [5, 22.5], [10, 26.5], [15, 29.3], [20, 30.8], [25, 31.7], [30, 32.3], [35, 32.7], [40, 33]],
+    color: '#9333ea',
     dashed: true,
   },
-  // --- ²A₁ (from ²G) ---
   {
-    label: '²A₁',
+    label: '²A₁g',
     superscript: '2',
-    subscript: 'A₁',
+    subscript: 'A₁g',
     freeIonTerm: '²G',
-    points: [[0, 17], [0.5, 22], [1, 28], [1.5, 34], [2, 40], [2.5, 46], [3, 51], [3.5, 56], [4, 58]],
-    color: '#555555',
+    points: [[0, 17], [10, 27], [20, 37], [30, 47], [40, 57]],
+    color: '#9333ea',
     dashed: true,
   },
-  // --- ²A₂ (from ²F) ---
   {
-    label: '²A₂',
+    label: '²T₂g',
     superscript: '2',
-    subscript: 'A₂',
-    freeIonTerm: '²F',
-    points: [[0, 34], [0.5, 38], [1, 43], [1.5, 49], [2, 55], [2.5, 61], [3, 67], [3.5, 72], [4, 77]],
-    color: '#555555',
+    subscript: 'T₂g',
+    freeIonTerm: '²H',
+    points: [[0, 22.5], [10, 32], [20, 41.5], [30, 51.5], [40, 61]],
+    color: '#9333ea',
+    dashed: true,
+  },
+  {
+    label: '²T₁g',
+    superscript: '2',
+    subscript: 'T₁g',
+    freeIonTerm: '²H',
+    points: [[0, 22.5], [10, 32.4], [20, 42.4], [30, 52.5], [40, 63]],
+    color: '#9333ea',
+    dashed: true,
+  },
+  {
+    label: '²Eg',
+    superscript: '2',
+    subscript: 'Eg',
+    freeIonTerm: '²H',
+    points: [[0, 22.5], [10, 32.8], [20, 43], [30, 53.5], [40, 64]],
+    color: '#9333ea',
     dashed: true,
   },
 ];
 
-// Free-ion terms displayed on the left y-axis
 const freeIonTerms: { label: string; E: number }[] = [
   { label: '⁴F', E: 0 },
   { label: '⁴P', E: 15 },
   { label: '²G', E: 17 },
   { label: '²H', E: 22.5 },
-  { label: '²P', E: 24 },
-  { label: '²D', E: 26 },
-  { label: '²F', E: 34 },
-  { label: '²D', E: 63 },
 ];
 
 // -------- chart geometry constants --------
@@ -127,9 +131,9 @@ const PLOT_W = WIDTH - MARGIN.left - MARGIN.right;
 const PLOT_H = HEIGHT - MARGIN.top - MARGIN.bottom;
 
 const X_MIN = 0;
-const X_MAX = 4;
+const X_MAX = 40;
 const Y_MIN = 0;
-const Y_MAX = 80;
+const Y_MAX = 70;
 
 function xScale(v: number) {
   return MARGIN.left + ((v - X_MIN) / (X_MAX - X_MIN)) * PLOT_W;
@@ -212,17 +216,17 @@ export default function TanabeSuganoDiagram() {
   // Compute intersections at current Δ/B
   const intersections = deltaB !== null
     ? lines
-        .map((line) => {
-          const eVal = interpolateE(line.points, deltaB);
-          return eVal !== null ? { ...line, eVal } : null;
-        })
-        .filter(Boolean) as (TSLine & { eVal: number })[]
+      .map((line) => {
+        const eVal = interpolateE(line.points, deltaB);
+        return eVal !== null ? { ...line, eVal } : null;
+      })
+      .filter(Boolean) as (TSLine & { eVal: number })[]
     : [];
 
   // X-axis ticks
-  const xTicks = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4];
+  const xTicks = [0, 10, 20, 30, 40];
   // Y-axis ticks
-  const yTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80];
+  const yTicks = [0, 10, 20, 30, 40, 50, 60, 70];
 
   return (
     <div className="p-4 sm:p-5 bg-white border border-gray-200 rounded-xl shadow-sm">
@@ -333,7 +337,7 @@ export default function TanabeSuganoDiagram() {
             fontWeight="bold"
             fill="#334155"
           >
-            Δ/B
+            Δ<tspan fontSize="10" dy="3">o</tspan><tspan dy="-3">/B</tspan>
           </text>
           <text
             x={16}
@@ -345,6 +349,16 @@ export default function TanabeSuganoDiagram() {
             transform={`rotate(-90, 16, ${MARGIN.top + PLOT_H / 2})`}
           >
             E/B
+          </text>
+
+          <text
+            x={MARGIN.left + 5}
+            y={MARGIN.top + PLOT_H + 42}
+            fontSize="16"
+            fill="#cbd5e1"
+            fontWeight="500"
+          >
+            octahedral d³
           </text>
 
           {/* Free-ion term labels on the left */}
@@ -388,7 +402,7 @@ export default function TanabeSuganoDiagram() {
                 y={ly}
                 fontSize="11"
                 fontWeight="600"
-                fill={line.dashed ? '#6b7280' : '#1a1a1a'}
+                fill="#1a1a1a"
               >
                 {line.label}
               </text>
@@ -500,11 +514,11 @@ export default function TanabeSuganoDiagram() {
       {/* Brief legend */}
       <div className="mt-3 flex flex-wrap gap-3 text-[10px] text-gray-500">
         <div className="flex items-center gap-1">
-          <svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke="#1a1a1a" strokeWidth="2" /></svg>
+          <svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke="#00bcd4" strokeWidth="2.2" /></svg>
           <span>Kuartet (spin-allowed)</span>
         </div>
         <div className="flex items-center gap-1">
-          <svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke="#555" strokeWidth="1.5" strokeDasharray="4,2" /></svg>
+          <svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke="#9333ea" strokeWidth="1.5" strokeDasharray="4,2" /></svg>
           <span>Doublet (spin-forbidden)</span>
         </div>
       </div>
