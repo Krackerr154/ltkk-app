@@ -252,23 +252,52 @@ export default function TermSymbolD3() {
                           </ul>
                         </div>
                       </motion.div>
-                    ) : (
-                      <motion.div key="ex" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                    ) : (t2gCount === 2 && egCount === 1) ? (
+                      <motion.div key="ex1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <div className="mb-4 text-center">
-                          <div className="inline-flex items-center gap-3 bg-amber-50 px-5 py-2.5 rounded-xl border border-amber-200 shadow-sm">
-                            <span className="text-amber-700 font-bold uppercase tracking-widest text-sm">— Keadaan Tereksitasi —</span>
+                          <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-amber-50 px-5 py-2.5 rounded-xl border border-amber-200 shadow-sm">
+                            <span className="text-2xl font-serif font-bold text-amber-900 border-r border-amber-200 pr-3 flex items-center gap-2">
+                              <KaTeX math="^4T_{2g}" /> <span className="text-sm font-sans mx-1">/</span> <KaTeX math="^4T_{1g}" />
+                            </span>
+                            <span className="text-amber-700 font-medium tracking-wide text-[11px] sm:text-sm">— Keadaan Tereksitasi</span>
                           </div>
                         </div>
-                        <div className="bg-white p-5 rounded-xl border border-amber-100 text-gray-700 text-sm max-w-2xl mx-auto shadow-sm leading-relaxed">
-                          <p className="mb-2 text-amber-700 font-semibold flex items-center gap-2">
-                            <span className="w-5 h-5 rounded-[4px] bg-amber-100 text-amber-800 flex items-center justify-center text-xs border border-amber-200">!</span> Membutuhkan Penyerapan Energi (<KaTeX math="\Delta_o" />)
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 text-gray-700 text-sm max-w-2xl mx-auto shadow-sm leading-relaxed">
+                          <p className="mb-3 text-amber-700 font-semibold flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-[4px] bg-amber-100 text-amber-800 flex items-center justify-center text-xs border border-amber-200">!</span> Asal Simbol <KaTeX math="^4T_{2g}" /> dan <KaTeX math="^4T_{1g}" />
                           </p>
-                          <p className="mb-2">
-                            Eksitasi elektron ke orbital <KaTeX math="e_g" /> meningkatkan tolakan tolakan elektrostatik ligan sebesar +6Dq.
+                          <p className="mb-3 text-gray-600">
+                            Satu elektron tereksitasi ke <KaTeX math="e_g" /> menghasilkan konfigurasi <KaTeX math="(t_{2g})^2(e_g)^1" />. Mengapa muncul term <KaTeX math="T_{2g}" /> dan <KaTeX math="T_{1g}" />?
                           </p>
-                          <p className="text-gray-600 text-[13px] bg-amber-50 p-3 rounded-lg border border-amber-100/50">
-                            Konfigurasi tereksitasi ini menghasilkan term <KaTeX math="^4T_{2g}" /> atau <KaTeX math="^4T_{1g}" /> yang dapat diukur menggunakan spektroskopi penyerapan sinar UV-Vis.
+                          <ul className="text-left inline-block space-y-2 text-gray-600 bg-amber-50/50 p-4 rounded-lg border border-amber-100/50 w-full mt-1">
+                            <li>• <strong>Pendekatan Teori Grup (Produk Silang):</strong> Interaksi spasial antara "hole" di orbital <KaTeX math="t_{2g}" /> (simetri <KaTeX math="T_{2g}" />) dan elektron tunggal di orbital <KaTeX math="e_g" /> (simetri <KaTeX math="E_g" />) dihitung menggunakan perkalian (direct product) simetrinya.</li>
+                            <li>• <strong>Rumus:</strong> <KaTeX math="T_{2g} \otimes E_g = T_{1g} \oplus T_{2g}" />.</li>
+                            <li>• Karenanya, konfigurasi ini membelah (split) menjadi dua keadaan eksitasi <strong>Triply Degenerate</strong> dengan spin tetap paralel (S=3/2), yaitu <KaTeX math="^4T_{2g}" /> dan <KaTeX math="^4T_{1g}(F)" />.</li>
+                          </ul>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div key="ex2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                        <div className="mb-4 text-center">
+                          <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-rose-50 px-5 py-2.5 rounded-xl border border-rose-200 shadow-sm">
+                            <span className="text-2xl font-serif font-bold text-rose-900 border-r border-rose-200 pr-3">
+                              <KaTeX math="^4T_{1g}(P)" />
+                            </span>
+                            <span className="text-rose-700 font-medium tracking-wide text-[11px] sm:text-sm">— Eksitasi Tingkat Tinggi</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 text-gray-700 text-sm max-w-2xl mx-auto shadow-sm leading-relaxed">
+                          <p className="mb-3 text-rose-700 font-semibold flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-[4px] bg-rose-100 text-rose-800 flex items-center justify-center text-xs border border-rose-200">!!</span> Asal Simbol <KaTeX math="^4T_{1g}(P)" />
                           </p>
+                          <p className="mb-3 text-gray-600">
+                            Dua elektron dieksitasi ke orbital berenergi tinggi membentuk konfigurasi <KaTeX math="(t_{2g})^1(e_g)^2" />. Mengapa mendapat <KaTeX math="T_{1g}" /> lagi?
+                          </p>
+                          <ul className="text-left inline-block space-y-2 text-gray-600 bg-rose-50/50 p-4 rounded-lg border border-rose-100/50 w-full mt-1">
+                            <li>• <strong>Pendekatan Teori Grup:</strong> Dua elektron ber-spin paralel di level <KaTeX math="e_g" /> bergabung memberikan simetri spasial total <KaTeX math="A_{2g}" />. Satu elektron tersisa di <KaTeX math="t_{2g}" /> memiliki simetri <KaTeX math="T_{2g}" />.</li>
+                            <li>• <strong>Rumus Produk Silang:</strong> <KaTeX math="T_{2g} \otimes A_{2g} = T_{1g}" />.</li>
+                            <li>• Keadaan ini juga <strong>Triply Degenerate</strong>, tetapi energinya lebih tinggi dari <KaTeX math="^4T_{1g}(F)" />. Karena kedua term berbagi simetri spasial namun berasal dari sifat interaksi spin yang berbeda di ion bebas, term tereksitasi ganda ini diturunkan/berkorelasi dengan term ion bebas <KaTeX math="^4P" />, sehingga disimbolkan sebagai <KaTeX math="^4T_{1g}(P)" />.</li>
+                          </ul>
                         </div>
                       </motion.div>
                     )}
