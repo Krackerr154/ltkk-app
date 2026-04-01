@@ -116,7 +116,7 @@ export default function Home() {
             <strong className="text-teal-700">urea</strong> ([Cr(ur)₆]Cl₃·3H₂O), dan{' '}
             <strong className="text-teal-700">asetilasetonato</strong> ([Cr(acac)₃]).
           </p>
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-5">
+          <div className="grid grid-cols-3 gap-3 mt-5">
             <div className="text-center p-3 bg-gray-50 rounded-xl">
               <p className="text-2xl font-bold text-teal-700">3</p>
               <p className="text-xs text-gray-500 mt-0.5">Kompleks</p>

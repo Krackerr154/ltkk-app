@@ -2,6 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import SectionCard from '@/components/SectionCard';
 import CrystalFieldDiagram from '@/components/CrystalFieldDiagram';
+import TermSymbolD3 from '@/components/TermSymbolD3';
 import TanabeSuganoDiagram from '@/components/TanabeSuganoDiagram';
 import SpectrochemicalSeries from '@/components/SpectrochemicalSeries';
 import WavelengthColor from '@/components/WavelengthColor';
@@ -121,7 +122,7 @@ export default function Modul6() {
             tanpa berpasangan (sesuai aturan Hund).
           </p>
           <CrystalFieldDiagram />
-          
+
           <div className="mt-5 pt-4 border-t border-gray-100 text-sm text-gray-700 space-y-3">
             <p>
               Dari diagram Tanabe-Sugano untuk ion <KaTeX math="d^3" />,{' '}
@@ -148,7 +149,12 @@ export default function Modul6() {
           </div>
         </SectionCard>
 
-        {/* 3. Tanabe-Sugano Diagram */}
+        {/* 3. Term Symbol Diagram */}
+        <SectionCard title="Penentuan Simbol Term Keadaan Dasar (d³)" icon="🔤" accent="border-purple-500">
+          <TermSymbolD3 />
+        </SectionCard>
+
+        {/* 4. Tanabe-Sugano Diagram */}
         <SectionCard title="Diagram Tanabe-Sugano (d³)" icon="📈" accent="border-violet-500">
           <p className="text-sm text-gray-600 mb-3">
             Diagram Tanabe-Sugano menggambarkan energi keadaan elektronik (E/B) sebagai fungsi
@@ -246,7 +252,7 @@ export default function Modul6() {
               cahaya yang diserap. Jika larutan menyerap cahaya pada daerah kuning-hijau (≈ 570 nm),
               maka larutan akan tampak berwarna <strong>biru-ungu</strong>.
             </p>
-            
+
             <InteractiveColorWheel />
 
             <div className="overflow-x-auto">
