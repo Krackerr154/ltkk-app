@@ -143,7 +143,7 @@ export default function TermSymbolD3() {
           >
             <div className="bg-purple-50 text-purple-900 p-5 sm:p-6 rounded-xl border border-purple-200 text-sm shadow-sm mt-3 mb-2">
               <p className="mb-4">
-                <strong>Tahap 2: Pemisahan Oktahedral ($O_h$):</strong> Dalam pengaruh ligan oktahedral, kelima orbital terbelah menjadi dua kelompok energi (<KaTeX math="t_{2g}" /> dan <KaTeX math="e_g" />).
+                <strong>Tahap 2: Pemisahan Oktahedral (<KaTeX math="O_h" />):</strong> Dalam pengaruh ligan oktahedral, kelima orbital terbelah menjadi dua kelompok energi (<KaTeX math="t_{2g}" /> dan <KaTeX math="e_g" />).
                 Isi kotak orbital yang baru terbelah ini dengan 3 elektron untuk menentukan <strong>Term Simbol Oktahedral</strong>.
               </p>
 
