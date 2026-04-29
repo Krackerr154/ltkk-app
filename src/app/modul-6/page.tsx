@@ -9,6 +9,7 @@ import WavelengthColor from '@/components/WavelengthColor';
 import ThinkReveal from '@/components/ThinkReveal';
 import KaTeX from '@/components/KaTeX';
 import InteractiveColorWheel from '@/components/InteractiveColorWheel';
+import SelectionRulesExplorer from '@/components/SelectionRulesExplorer';
 
 interface ComplexData {
   name: string;
@@ -147,6 +148,11 @@ export default function Modul6() {
               </p>
             </ThinkReveal>
           </div>
+        </SectionCard>
+
+        {/* 2.5. Selection Rules */}
+        <SectionCard title="Aturan Seleksi & Pengecualiannya" icon="⚡" accent="border-rose-500">
+          <SelectionRulesExplorer />
         </SectionCard>
 
         {/* 3. Term Symbol Diagram */}
