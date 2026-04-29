@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import KaTeX from './KaTeX';
 
 export default function TermSymbolD3() {
+  // Orbital state: 0 = empty, 1 = spin up (↑), -1 = spin down (↓)
   const [freeOrbitals, setFreeOrbitals] = useState<number[]>([0, 0, 0, 0, 0]);
   const freeMlValues = [2, 1, 0, -1, -2];
 
@@ -14,27 +15,39 @@ export default function TermSymbolD3() {
 
   const maxElectrons = 3;
 
+  // Cycle: 0 → 1 (up) → -1 (down) → 0 (empty)
   const toggleFree = (index: number) => {
-    const current = freeOrbitals.filter(e => e > 0).length;
     const newOrbs = [...freeOrbitals];
-    if (newOrbs[index] === 1) newOrbs[index] = 0;
-    else if (current < maxElectrons) newOrbs[index] = 1;
+    const current = newOrbs.filter(e => e !== 0).length;
+    if (newOrbs[index] === 1) {
+      newOrbs[index] = -1; // up → down (no count change)
+    } else if (newOrbs[index] === -1) {
+      newOrbs[index] = 0; // down → empty
+    } else if (current < maxElectrons) {
+      newOrbs[index] = 1; // empty → up
+    }
     setFreeOrbitals(newOrbs);
   };
 
   const toggleOct = (index: number) => {
-    const current = octOrbitals.filter(e => e > 0).length;
     const newOrbs = [...octOrbitals];
-    if (newOrbs[index] === 1) newOrbs[index] = 0;
-    else if (current < maxElectrons) newOrbs[index] = 1;
+    const current = newOrbs.filter(e => e !== 0).length;
+    if (newOrbs[index] === 1) {
+      newOrbs[index] = -1;
+    } else if (newOrbs[index] === -1) {
+      newOrbs[index] = 0;
+    } else if (current < maxElectrons) {
+      newOrbs[index] = 1;
+    }
     setOctOrbitals(newOrbs);
   };
 
   // --- FREE ION CALCS ---
-  const freeCount = freeOrbitals.filter(e => e > 0).length;
+  const freeCount = freeOrbitals.filter(e => e !== 0).length;
   const isFreeComplete = freeCount === maxElectrons;
-  const L = freeOrbitals.reduce((acc, val, idx) => acc + (val === 1 ? freeMlValues[idx] : 0), 0);
-  const freeS = freeCount * 0.5;
+  const L = freeOrbitals.reduce((acc, val, idx) => acc + (val !== 0 ? freeMlValues[idx] : 0), 0);
+  // S = sum of individual spins: up = +0.5, down = -0.5
+  const freeS = Math.abs(freeOrbitals.reduce((acc, val) => acc + (val === 1 ? 0.5 : val === -1 ? -0.5 : 0), 0));
   const freeMultiplicity = 2 * freeS + 1;
 
   const getTermLetter = (l: number) => {
@@ -45,11 +58,17 @@ export default function TermSymbolD3() {
   const isFreeGroundState = isFreeComplete && freeOrbitals[0] === 1 && freeOrbitals[1] === 1 && freeOrbitals[2] === 1;
 
   // --- OCTAHEDRAL CALCS ---
-  const octCount = octOrbitals.filter(e => e > 0).length;
+  const octCount = octOrbitals.filter(e => e !== 0).length;
   const isOctComplete = octCount === maxElectrons;
-  const t2gCount = octOrbitals[0] + octOrbitals[1] + octOrbitals[2];
-  const egCount = octOrbitals[3] + octOrbitals[4];
-  const isOctGroundState = isOctComplete && t2gCount === 3 && egCount === 0;
+  const t2gCount = (octOrbitals[0] !== 0 ? 1 : 0) + (octOrbitals[1] !== 0 ? 1 : 0) + (octOrbitals[2] !== 0 ? 1 : 0);
+  const egCount = (octOrbitals[3] !== 0 ? 1 : 0) + (octOrbitals[4] !== 0 ? 1 : 0);
+  // All parallel spins (all up OR all down) in t₂g = ground state
+  const octAllParallel = octOrbitals.filter(e => e !== 0).every((v, _, arr) => v === arr[0]);
+  const isOctGroundState = isOctComplete && t2gCount === 3 && egCount === 0 && octAllParallel;
+  // Compute octahedral spin
+  const octS = Math.abs(octOrbitals.reduce((acc, val) => acc + (val === 1 ? 0.5 : val === -1 ? -0.5 : 0), 0));
+  const octMultiplicity = 2 * octS + 1;
+  const octIsQuartet = octMultiplicity === 4;
 
   // Reusable electron SVGs
   const ElectronSVG = () => (
@@ -59,13 +78,20 @@ export default function TermSymbolD3() {
     </svg>
   );
 
+  const ElectronDownSVG = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="5 12 12 19 19 12"></polyline>
+    </svg>
+  );
+
   return (
     <div className="space-y-6">
       {/* PHASE 1: FREE ION */}
       <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 lg:p-8 shadow-sm">
         <p className="text-sm text-gray-600 mb-6 text-center max-w-lg mx-auto leading-relaxed">
           Tahap 1: Isi <strong>3 elektron</strong> ke dalam orbital d untuk mencari <strong>Simbol Term Bebas (Free Ion)</strong> keadaan dasar ion Cr³⁺. <br className="hidden sm:block" />
-          <span className="text-gray-400">Klik kotak orbital (dari kiri) untuk memasukkan/mengeluarkan elektron tunggal.</span>
+          <span className="text-gray-400">Klik kotak orbital untuk memutar: kosong → ↑ (spin up) → ↓ (spin down) → kosong.</span>
         </p>
 
         <div className="flex justify-center gap-2 sm:gap-4 lg:gap-6 mb-3">
@@ -78,13 +104,19 @@ export default function TermSymbolD3() {
                 className={`w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center border-2 rounded-xl transition-all duration-200 ease-in-out cursor-pointer relative shadow-sm
                   bg-gray-50 hover:bg-gray-100 border-gray-200
                   ${freeOrbitals[i] === 1 ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-500/20' : ''}
+                  ${freeOrbitals[i] === -1 ? 'border-red-400 bg-red-50 ring-2 ring-red-400/20' : ''}
                   ${freeCount === maxElectrons && freeOrbitals[i] === 0 ? 'opacity-40 cursor-not-allowed' : ''}
                 `}
               >
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                   {freeOrbitals[i] === 1 && (
-                    <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} className="text-purple-600">
+                    <motion.div key="up" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} className="text-purple-600">
                       <ElectronSVG />
+                    </motion.div>
+                  )}
+                  {freeOrbitals[i] === -1 && (
+                    <motion.div key="down" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} className="text-red-500">
+                      <ElectronDownSVG />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -173,15 +205,15 @@ export default function TermSymbolD3() {
                       <div className="absolute top-1/2 left-0 w-full border-t border-gray-200 z-0 -translate-y-[10px]"></div>
                       {/* Box dx2-y2 */}
                       <div className="flex flex-col items-center z-10">
-                        <button onClick={() => toggleOct(3)} disabled={octCount === maxElectrons && octOrbitals[3] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[3] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-300'}`}>
-                          <AnimatePresence>{octOrbitals[3] === 1 && <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}</AnimatePresence>
+                        <button onClick={() => toggleOct(3)} disabled={octCount === maxElectrons && octOrbitals[3] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[3] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : octOrbitals[3] === -1 ? 'border-red-400 ring-1 ring-red-400/20' : 'border-gray-300'}`}>
+                          <AnimatePresence mode="wait">{octOrbitals[3] === 1 && <motion.div key="up" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}{octOrbitals[3] === -1 && <motion.div key="dn" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-red-500"><ElectronDownSVG /></motion.div>}</AnimatePresence>
                         </button>
                         <span className="text-[10px] text-gray-400 mt-1 font-mono">dx²-y²</span>
                       </div>
                       {/* Box dz2 */}
                       <div className="flex flex-col items-center z-10">
-                        <button onClick={() => toggleOct(4)} disabled={octCount === maxElectrons && octOrbitals[4] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[4] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-300'}`}>
-                          <AnimatePresence>{octOrbitals[4] === 1 && <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}</AnimatePresence>
+                        <button onClick={() => toggleOct(4)} disabled={octCount === maxElectrons && octOrbitals[4] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[4] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : octOrbitals[4] === -1 ? 'border-red-400 ring-1 ring-red-400/20' : 'border-gray-300'}`}>
+                          <AnimatePresence mode="wait">{octOrbitals[4] === 1 && <motion.div key="up" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}{octOrbitals[4] === -1 && <motion.div key="dn" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-red-500"><ElectronDownSVG /></motion.div>}</AnimatePresence>
                         </button>
                         <span className="text-[10px] text-gray-400 mt-1 font-mono">dz²</span>
                       </div>
@@ -198,22 +230,22 @@ export default function TermSymbolD3() {
                       <div className="absolute top-1/2 left-0 w-full border-t border-gray-200 z-0 -translate-y-[10px]"></div>
                       {/* Box dxy */}
                       <div className="flex flex-col items-center z-10">
-                        <button onClick={() => toggleOct(0)} disabled={octCount === maxElectrons && octOrbitals[0] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[0] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-300'}`}>
-                          <AnimatePresence>{octOrbitals[0] === 1 && <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}</AnimatePresence>
+                        <button onClick={() => toggleOct(0)} disabled={octCount === maxElectrons && octOrbitals[0] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[0] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : octOrbitals[0] === -1 ? 'border-red-400 ring-1 ring-red-400/20' : 'border-gray-300'}`}>
+                          <AnimatePresence mode="wait">{octOrbitals[0] === 1 && <motion.div key="up" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}{octOrbitals[0] === -1 && <motion.div key="dn" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-red-500"><ElectronDownSVG /></motion.div>}</AnimatePresence>
                         </button>
                         <span className="text-[10px] text-gray-400 mt-1 font-mono">dxy</span>
                       </div>
                       {/* Box dxz */}
                       <div className="flex flex-col items-center z-10">
-                        <button onClick={() => toggleOct(1)} disabled={octCount === maxElectrons && octOrbitals[1] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[1] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-300'}`}>
-                          <AnimatePresence>{octOrbitals[1] === 1 && <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}</AnimatePresence>
+                        <button onClick={() => toggleOct(1)} disabled={octCount === maxElectrons && octOrbitals[1] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[1] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : octOrbitals[1] === -1 ? 'border-red-400 ring-1 ring-red-400/20' : 'border-gray-300'}`}>
+                          <AnimatePresence mode="wait">{octOrbitals[1] === 1 && <motion.div key="up" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}{octOrbitals[1] === -1 && <motion.div key="dn" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-red-500"><ElectronDownSVG /></motion.div>}</AnimatePresence>
                         </button>
                         <span className="text-[10px] text-gray-400 mt-1 font-mono">dxz</span>
                       </div>
                       {/* Box dyz */}
                       <div className="flex flex-col items-center z-10">
-                        <button onClick={() => toggleOct(2)} disabled={octCount === maxElectrons && octOrbitals[2] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[2] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-300'}`}>
-                          <AnimatePresence>{octOrbitals[2] === 1 && <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}</AnimatePresence>
+                        <button onClick={() => toggleOct(2)} disabled={octCount === maxElectrons && octOrbitals[2] === 0} className={`w-14 h-11 border-2 rounded-md transition-all cursor-pointer bg-white hover:bg-gray-50 flex items-center justify-center shadow-sm ${octOrbitals[2] === 1 ? 'border-purple-500 ring-1 ring-purple-500/20' : octOrbitals[2] === -1 ? 'border-red-400 ring-1 ring-red-400/20' : 'border-gray-300'}`}>
+                          <AnimatePresence mode="wait">{octOrbitals[2] === 1 && <motion.div key="up" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-purple-600"><ElectronSVG /></motion.div>}{octOrbitals[2] === -1 && <motion.div key="dn" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }} className="text-red-500"><ElectronDownSVG /></motion.div>}</AnimatePresence>
                         </button>
                         <span className="text-[10px] text-gray-400 mt-1 font-mono">dyz</span>
                       </div>
@@ -252,7 +284,32 @@ export default function TermSymbolD3() {
                           </ul>
                         </div>
                       </motion.div>
-                    ) : (t2gCount === 2 && egCount === 1) ? (
+                    ) : (t2gCount === 3 && egCount === 0 && !octAllParallel) ? (
+                      /* t₂g³ with MIXED spins — doublet states, NOT ground state */
+                      <motion.div key="mixed" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                        <div className="mb-4 text-center">
+                          <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-orange-50 px-5 py-2.5 rounded-xl border border-orange-200 shadow-sm">
+                            <span className="text-2xl font-serif font-bold text-orange-900 border-r border-orange-200 pr-3">
+                              <KaTeX math={`^${octMultiplicity}\\text{${octMultiplicity === 2 ? 'E_g / T_{1g} / T_{2g}' : 'A_{2g}'}}`} />
+                            </span>
+                            <span className="text-orange-700 font-medium tracking-wide text-[11px] sm:text-sm">— Bukan Keadaan Dasar</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 text-gray-700 text-sm max-w-2xl mx-auto shadow-sm leading-relaxed">
+                          <p className="mb-3 text-orange-700 font-semibold flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-[4px] bg-orange-100 text-orange-800 flex items-center justify-center text-xs border border-orange-200">⚠</span> Spin tidak paralel!
+                          </p>
+                          <p className="mb-3 text-gray-600">
+                            Konfigurasi orbital sama (<KaTeX math="t_{2g}^3" />), tetapi spin tidak semua searah. Menurut <strong>Aturan Hund</strong>, keadaan dasar harus memiliki S maksimum (semua spin paralel: ↑↑↑ atau ↓↓↓).
+                          </p>
+                          <ul className="text-left inline-block space-y-1.5 text-gray-600 bg-orange-50/50 p-4 rounded-lg border border-orange-100/50 w-full">
+                            <li>• <strong>S saat ini:</strong> {octS.toFixed(1)} → multiplisitas = <strong>{octMultiplicity}</strong> ({octMultiplicity === 2 ? 'Doublet' : octMultiplicity === 4 ? 'Kuartet' : `2S+1=${octMultiplicity}`})</li>
+                            <li>• Keadaan ini adalah <strong>excited state</strong> dalam konfigurasi yang sama — energinya lebih tinggi karena melanggar Aturan Hund.</li>
+                            <li>• <strong>Perbaikan:</strong> Buat semua 3 elektron searah (↑↑↑ atau ↓↓↓) untuk mendapatkan ground state <KaTeX math="^4A_{2g}" />.</li>
+                          </ul>
+                        </div>
+                      </motion.div>
+                    ) : (t2gCount === 2 && egCount === 1 && octIsQuartet) ? (
                       <motion.div key="ex1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <div className="mb-4 text-center">
                           <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-amber-50 px-5 py-2.5 rounded-xl border border-amber-200 shadow-sm">
@@ -276,7 +333,7 @@ export default function TermSymbolD3() {
                           </ul>
                         </div>
                       </motion.div>
-                    ) : (
+                    ) : (t2gCount === 1 && egCount === 2 && octIsQuartet) ? (
                       <motion.div key="ex2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <div className="mb-4 text-center">
                           <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-rose-50 px-5 py-2.5 rounded-xl border border-rose-200 shadow-sm">
@@ -298,6 +355,22 @@ export default function TermSymbolD3() {
                             <li>• <strong>Rumus Produk Silang:</strong> <KaTeX math="T_{2g} \otimes A_{2g} = T_{1g}" />.</li>
                             <li>• Keadaan ini juga <strong>Triply Degenerate</strong>, tetapi energinya lebih tinggi dari <KaTeX math="^4T_{1g}(F)" />. Karena kedua term berbagi simetri spasial namun berasal dari sifat interaksi spin yang berbeda di ion bebas, term tereksitasi ganda ini diturunkan/berkorelasi dengan term ion bebas <KaTeX math="^4P" />, sehingga disimbolkan sebagai <KaTeX math="^4T_{1g}(P)" />.</li>
                           </ul>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      /* Generic fallback for other mixed-spin excited configs */
+                      <motion.div key="generic" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                        <div className="mb-4 text-center">
+                          <div className="inline-flex flex-wrap items-center justify-center gap-3 bg-gray-50 px-5 py-2.5 rounded-xl border border-gray-200 shadow-sm">
+                            <span className="text-lg font-serif font-bold text-gray-700 border-r border-gray-200 pr-3">
+                              <KaTeX math={`(t_{2g})^{${t2gCount}}(e_g)^{${egCount}}`} />
+                            </span>
+                            <span className="text-gray-500 font-medium tracking-wide text-[11px] sm:text-sm">— S = {octS}, 2S+1 = {octMultiplicity}</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border border-gray-200 text-gray-600 text-sm max-w-2xl mx-auto shadow-sm text-center">
+                          <p>Konfigurasi ini menghasilkan keadaan tereksitasi dengan multiplisitas <strong>{octMultiplicity}</strong> ({octMultiplicity === 2 ? 'Doublet' : octMultiplicity === 4 ? 'Kuartet' : `2S+1=${octMultiplicity}`}).</p>
+                          <p className="mt-2 text-xs text-gray-400">Coba buat semua spin searah dan isi t₂g terlebih dahulu untuk menemukan ground state.</p>
                         </div>
                       </motion.div>
                     )}

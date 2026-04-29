@@ -10,6 +10,7 @@ import ThinkReveal from '@/components/ThinkReveal';
 import KaTeX from '@/components/KaTeX';
 import InteractiveColorWheel from '@/components/InteractiveColorWheel';
 import SelectionRulesExplorer from '@/components/SelectionRulesExplorer';
+import TransitionTypesExplorer from '@/components/TransitionTypesExplorer';
 
 interface ComplexData {
   name: string;
@@ -113,6 +114,16 @@ export default function Modul6() {
               </ol>
             </div>
           </div>
+        </SectionCard>
+
+        {/* 1.5. Types of Electronic Transitions */}
+        <SectionCard title="Jenis-Jenis Transisi Elektronik pada Kompleks" icon="🔄" accent="border-sky-500">
+          <p className="text-sm text-gray-600 mb-3">
+            Kompleks logam transisi dapat menunjukkan beberapa jenis transisi elektronik
+            yang berbeda. Setiap jenis memiliki karakteristik intensitas dan posisi
+            panjang gelombang yang khas dalam spektrum UV-Vis.
+          </p>
+          <TransitionTypesExplorer />
         </SectionCard>
 
         {/* 2. Crystal Field Diagram & Electronic Transition */}
