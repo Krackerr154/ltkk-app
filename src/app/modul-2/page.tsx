@@ -7,6 +7,7 @@ import LigandStructure from '@/components/LigandStructure';
 import ThinkReveal from '@/components/ThinkReveal';
 import KaTeX from '@/components/KaTeX';
 import VaporDiffusion from '@/components/VaporDiffusion';
+import OxalateSynthesisProcedure from '@/components/OxalateSynthesisProcedure';
 
 export default function Modul2() {
   return (
@@ -73,7 +74,7 @@ export default function Modul2() {
         </SectionCard>
 
         {/* 3. Reaction Equations */}
-        <SectionCard title="Persamaan Reaksi" icon="⚗️" accent="border-amber-500">
+        <SectionCard title="Sintesis Kompleks" icon="⚗️" accent="border-amber-500">
           <div className="space-y-5">
             {/* Complex 1 */}
             <div className="space-y-4">
@@ -107,6 +108,9 @@ export default function Modul2() {
                   Dengan menggunakan K₂Cr₂O₇, asam oksalat bertindak ganda: sebagai <strong>reduktor</strong> (mereduksi Cr(VI) → Cr(III)) sekaligus sebagai <strong>ligan</strong> yang langsung berkoordinasi saat ion Cr(III) terbentuk in situ. Ini menghindari kebutuhan untuk menggantikan ligan akuo yang sudah terikat kuat.
                 </p>
               </ThinkReveal>
+
+              {/* Practicum Procedure */}
+              <OxalateSynthesisProcedure />
             </div>
 
             {/* Complex 2 */}
