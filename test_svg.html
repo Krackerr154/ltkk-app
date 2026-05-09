@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <svg viewBox="0 0 120 80" style="width:300px; background:#e5e7eb;">
+      <defs>
+        <!-- Clip path for liquid volume to match inner bowl -->
+        <clipPath id="bowl-inner">
+          <path d="M 7 30 C 7 73, 113 73, 113 30 Z" />
+        </clipPath>
+      </defs>
+
+      <!-- Spout -->
+      <path d="M 5 30 Q -2 22 10 21" fill="#f9fafb" stroke="#9ca3af" stroke-width="2" stroke-linejoin="round" />
+
+      <!-- Outer bowl body -->
+      <path d="M 5 30 C 5 75, 115 75, 115 30 Z" fill="#f9fafb" stroke="#9ca3af" stroke-width="2" />
+
+      <!-- Inner bowl opening -->
+      <ellipse cx="60" cy="30" rx="55" ry="15" fill="#e5e7eb" stroke="#9ca3af" stroke-width="2" />
+      <ellipse cx="60" cy="30" rx="53" ry="13" fill="#f3f4f6" stroke="none" />
+
+      <!-- Liquid -->
+      <g clip-path="url(#bowl-inner)">
+         <rect x="0" y="45" width="120" height="40" fill="#166534" opacity="0.9" />
+      </g>
+      <!-- Surface of liquid -->
+      <ellipse cx="60" cy="45" rx="44" ry="12" fill="#14532d" opacity="0.9" />
+
+    </svg>
+</body>
+</html>

@@ -8,6 +8,7 @@ import ThinkReveal from '@/components/ThinkReveal';
 import KaTeX from '@/components/KaTeX';
 import VaporDiffusion from '@/components/VaporDiffusion';
 import OxalateSynthesisProcedure from '@/components/OxalateSynthesisProcedure';
+import UreaSynthesisProcedure from '@/components/UreaSynthesisProcedure';
 
 export default function Modul2() {
   return (
@@ -136,6 +137,9 @@ export default function Modul2() {
                   <li><strong>HCl:</strong> Menjaga pH tetap asam agar ion Cr³⁺ tetap larut (mencegah pembentukan endapan Cr(OH)₃) selama proses pemanasan.</li>
                 </ul>
               </div>
+
+              {/* Practicum Procedure */}
+              <UreaSynthesisProcedure />
             </div>
 
             {/* Complex 3 */}

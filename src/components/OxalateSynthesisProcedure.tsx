@@ -49,7 +49,7 @@ const TemperatureCounter = ({ sequence }: { sequence: { temp: number, time: numb
 
     const tick = () => {
       const elapsed = Date.now() - startTime;
-      
+
       let currentIdx = 0;
       while (currentIdx < parsedSeq.length - 1 && elapsed >= parsedSeq[currentIdx + 1].time) {
         currentIdx++;
@@ -65,7 +65,7 @@ const TemperatureCounter = ({ sequence }: { sequence: { temp: number, time: numb
       const segmentDuration = endSegment.time - startSegment.time;
       const segmentElapsed = elapsed - startSegment.time;
       const progress = Math.min(1, segmentElapsed / segmentDuration);
-      
+
       // Ease-out cubic for realistic cooling curve
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const currentTemp = Math.round(startSegment.temp + (endSegment.temp - startSegment.temp) * easeOut);
@@ -111,7 +111,7 @@ export default function OxalateSynthesisProcedure() {
 
       <div className="flex flex-col md:flex-row">
         {/* Visualization Area */}
-        <div className="md:w-1/2 p-6 flex items-center justify-center bg-gray-50/50 border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] md:min-h-[300px]">
+        <div className="md:w-1/2 p-3 sm:p-6 flex items-center justify-center bg-gray-50/50 border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] md:min-h-[300px] overflow-hidden">
           <ProcedureVisual visualState={activeStep.visualState} />
         </div>
 
@@ -135,24 +135,22 @@ export default function OxalateSynthesisProcedure() {
             <button
               onClick={handlePrev}
               disabled={currentStep === 0}
-              className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-lg transition-colors shrink-0 ${
-                currentStep === 0
+              className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-lg transition-colors shrink-0 ${currentStep === 0
                   ? 'text-gray-300 cursor-not-allowed'
                   : 'text-teal-700 hover:bg-teal-50'
-              }`}
+                }`}
             >
               <ChevronLeft className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Sebelumnya</span>
             </button>
-            
+
             <div className="flex gap-1.5 flex-wrap justify-center px-2">
               {steps.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentStep(idx)}
-                  className={`h-2 rounded-full transition-all shrink-0 ${
-                    idx === currentStep ? 'bg-teal-500 w-4' : 'bg-gray-200 hover:bg-teal-200 w-2'
-                  }`}
+                  className={`h-2 rounded-full transition-all shrink-0 ${idx === currentStep ? 'bg-teal-500 w-4' : 'bg-gray-200 hover:bg-teal-200 w-2'
+                    }`}
                   aria-label={`Go to step ${idx + 1}`}
                 />
               ))}
@@ -161,11 +159,10 @@ export default function OxalateSynthesisProcedure() {
             <button
               onClick={handleNext}
               disabled={currentStep === steps.length - 1}
-              className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-lg transition-colors shrink-0 ${
-                currentStep === steps.length - 1
+              className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-lg transition-colors shrink-0 ${currentStep === steps.length - 1
                   ? 'text-gray-300 cursor-not-allowed'
                   : 'text-white bg-teal-600 hover:bg-teal-700 shadow-sm'
-              }`}
+                }`}
             >
               <span className="hidden sm:inline">Selanjutnya</span>
               <ChevronRight className="w-4 h-4 shrink-0" />
@@ -200,7 +197,7 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
   switch (visualState) {
     case 'prep':
       content = (
-        <div className="flex gap-6 items-end relative">
+        <div className="flex gap-3 sm:gap-6 items-end relative scale-[0.85] sm:scale-100 origin-bottom">
           {/* Oil Bath Setup */}
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-center relative z-10">
@@ -217,7 +214,7 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
             </div>
             <p className="text-[10px] text-gray-500 mt-2 font-medium">Penangas Minyak</p>
           </div>
-          
+
           {/* Water Bath Setup */}
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-center relative z-10">
@@ -241,32 +238,32 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
       content = (
         <div className="flex flex-col items-center relative mt-6 h-56">
           {/* Labels */}
-          <div className="absolute -top-6 left-1/2 flex flex-col items-center w-max opacity-0 animate-[fadeInOut_2s_1s_forwards]">
-             <div className="text-xs bg-white px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium">
-               K₂C₂O₄·H₂O (0,60 g) + H₂C₂O₄ (1,4 g)
-             </div>
+          <div className="absolute -top-6 inset-x-0 flex justify-center opacity-0 animate-[fadeInOutCentered_2s_1s_forwards] z-20">
+            <div className="text-[10px] sm:text-xs bg-white px-2 sm:px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium text-center">
+              K₂C₂O₄·H₂O (0,60 g) + H₂C₂O₄ (1,4 g)
+            </div>
           </div>
-          <div className="absolute -top-6 left-1/2 flex flex-col items-center w-max opacity-0 animate-[fadeInOut_2s_3s_forwards]">
-             <div className="text-xs bg-blue-50 px-3 py-1 rounded shadow-sm border border-blue-100 text-blue-700 font-medium flex items-center gap-1.5">
-               <Droplet className="w-4 h-4" /> Aqua DM hangat (6 mL)
-             </div>
+          <div className="absolute -top-6 inset-x-0 flex justify-center opacity-0 animate-[fadeInOutCentered_2s_3s_forwards] z-20">
+            <div className="text-[10px] sm:text-xs bg-blue-50 px-2 sm:px-3 py-1 rounded shadow-sm border border-blue-100 text-blue-700 font-medium flex items-center gap-1.5">
+              <Droplet className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" /> Aqua DM hangat (6 mL)
+            </div>
           </div>
 
           {/* Powders falling */}
           <div className="absolute top-8 w-8 h-16 flex justify-center flex-wrap gap-1 overflow-hidden z-10 opacity-0 animate-[dropPowder_2s_1s_forwards]">
-             <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-pulse"></div>
-             <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-             <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-             <div className="w-2 h-1.5 bg-gray-300 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+            <div className="w-2 h-1.5 bg-gray-300 rounded-full"></div>
           </div>
 
           {/* Water falling */}
           <div className="absolute top-8 w-4 h-20 flex flex-col items-center overflow-hidden z-10 opacity-0 animate-[dropPowder_2s_3s_forwards]">
-             <div className="w-1.5 h-5 bg-blue-200 rounded-full mb-1.5"></div>
-             <div className="w-1.5 h-4 bg-blue-300 rounded-full mb-1.5"></div>
-             <div className="w-1.5 h-3 bg-blue-200 rounded-full"></div>
+            <div className="w-1.5 h-5 bg-blue-200 rounded-full mb-1.5"></div>
+            <div className="w-1.5 h-4 bg-blue-300 rounded-full mb-1.5"></div>
+            <div className="w-1.5 h-3 bg-blue-200 rounded-full"></div>
           </div>
-          
+
           <div className="relative w-32 h-40 flex items-end justify-center">
             <ErlenmeyerFlask liquidComponent={
               <>
@@ -286,19 +283,19 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
           <div className="relative flex justify-center items-end z-10 mt-12">
             {/* Oil Bath Beaker */}
             <div className="relative w-44 h-28 border-2 border-t-0 border-gray-300 rounded-b-xl bg-gray-50 shadow-inner flex items-end justify-center">
-               <div className="w-full h-10 bg-amber-100/60 absolute bottom-0 rounded-b-[10px] border-t border-amber-200 flex justify-center z-0"></div>
-               
-               {/* Erlenmeyer moving down */}
-               <div className="absolute bottom-28 w-32 h-40 flex items-end justify-center z-10 animate-[dropFlask_1.5s_forwards]">
-                 <ErlenmeyerFlask className="absolute inset-0 w-full h-full text-blue-300" liquidComponent={
-                   <>
-                     <path d="M 20 118 Q 50 85 80 118 Z" fill="#cbd5e1" className="animate-[fadeOut_4s_2.5s_forwards]" />
-                     <path d={liquidPath} className="animate-[clearUp_4s_2.5s_forwards]" fill="#e2e8f0" opacity="0.9" />
-                   </>
-                 } />
-                 {/* Stir bar already inside */}
-                 <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20 animate-[perspectiveSpin_0.2s_linear_infinite]"></div>
-               </div>
+              <div className="w-full h-10 bg-amber-100/60 absolute bottom-0 rounded-b-[10px] border-t border-amber-200 flex justify-center z-0"></div>
+
+              {/* Erlenmeyer moving down */}
+              <div className="absolute bottom-28 w-32 h-40 flex items-end justify-center z-10 animate-[dropFlask_1.5s_forwards]">
+                <ErlenmeyerFlask className="absolute inset-0 w-full h-full text-blue-300" liquidComponent={
+                  <>
+                    <path d="M 20 118 Q 50 85 80 118 Z" fill="#cbd5e1" className="animate-[fadeOut_4s_2.5s_forwards]" />
+                    <path d={liquidPath} className="animate-[clearUp_4s_2.5s_forwards]" fill="#e2e8f0" opacity="0.9" />
+                  </>
+                } />
+                {/* Stir bar already inside */}
+                <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20 animate-[perspectiveSpin_0.2s_linear_infinite]"></div>
+              </div>
             </div>
           </div>
           <div className={hotplateClass}>
@@ -313,66 +310,66 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
       content = (
         <div className="flex flex-col items-center mt-6 h-56 justify-end relative">
           {/* Label */}
-          <div className="absolute top-2 left-1/2 flex flex-col items-center w-max opacity-0 animate-[fadeInOut_9s_0.5s_forwards] z-50">
-             <div className="text-xs bg-white px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium">
-               Tambah perlahan K₂Cr₂O₇ (0,45 g)
-             </div>
+          <div className="absolute top-2 inset-x-0 flex justify-center opacity-0 animate-[fadeInOutCentered_9s_0.5s_forwards] z-50">
+            <div className="text-[10px] sm:text-xs bg-white px-2 sm:px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium text-center">
+              Tambah perlahan K₂Cr₂O₇ (0,45 g)
+            </div>
           </div>
-          
+
           {/* Time Pop-up */}
-          <div className="absolute top-28 left-1/2 flex flex-col items-center w-max opacity-0 animate-[fadeInOut_2.5s_9.5s_forwards] z-50">
-             <div className="text-xs bg-yellow-50 px-3 py-1.5 rounded-full shadow-sm border border-yellow-200 text-yellow-800 font-medium flex items-center gap-1.5">
-               ⏳ Sekitar 30 menit
-             </div>
+          <div className="absolute top-28 inset-x-0 flex justify-center opacity-0 animate-[fadeInOutCentered_2.5s_9.5s_forwards] z-50">
+            <div className="text-[10px] sm:text-xs bg-yellow-50 px-2 sm:px-3 py-1.5 rounded-full shadow-sm border border-yellow-200 text-yellow-800 font-medium flex items-center gap-1.5">
+              ⏳ Sekitar 30 menit
+            </div>
           </div>
 
           <div className="relative flex justify-center items-end z-10 mt-12">
             {/* Powder Drops */}
             <div className="absolute -top-12 w-8 flex justify-center z-30 opacity-0 animate-[dropDichromate_1.5s_1s_forwards]">
-               <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
             </div>
             <div className="absolute -top-12 w-8 flex justify-center z-30 opacity-0 animate-[dropDichromate_1.5s_3s_forwards]">
-               <div className="w-2.5 h-2 bg-orange-500 rounded-full ml-3"></div>
+              <div className="w-2.5 h-2 bg-orange-500 rounded-full ml-3"></div>
             </div>
             <div className="absolute -top-12 w-8 flex justify-center z-30 opacity-0 animate-[dropDichromate_1.5s_5s_forwards]">
-               <div className="w-2 h-2.5 bg-orange-500 rounded-full mr-3"></div>
+              <div className="w-2 h-2.5 bg-orange-500 rounded-full mr-3"></div>
             </div>
             <div className="absolute -top-12 w-8 flex justify-center z-30 opacity-0 animate-[dropDichromate_1.5s_7s_forwards]">
-               <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
             </div>
 
             {/* Bubbles */}
             <div className="absolute top-[60px] w-12 flex justify-center gap-1.5 z-20 opacity-0 animate-[bubbleRise_1s_2.2s_forwards]">
-               <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
-               <div className="w-2 h-2 border border-white bg-white/40 rounded-full"></div>
-               <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-0.5"></div>
+              <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
+              <div className="w-2 h-2 border border-white bg-white/40 rounded-full"></div>
+              <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-0.5"></div>
             </div>
             <div className="absolute top-[60px] w-12 flex justify-center gap-1 z-20 opacity-0 animate-[bubbleRise_1s_4.2s_forwards]">
-               <div className="w-2 h-2 border border-white bg-white/40 rounded-full ml-2"></div>
-               <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
+              <div className="w-2 h-2 border border-white bg-white/40 rounded-full ml-2"></div>
+              <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
             </div>
             <div className="absolute top-[60px] w-12 flex justify-center gap-1.5 z-20 opacity-0 animate-[bubbleRise_1s_6.2s_forwards]">
-               <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-0.5"></div>
-               <div className="w-2 h-2 border border-white bg-white/40 rounded-full mr-2"></div>
-               <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
+              <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-0.5"></div>
+              <div className="w-2 h-2 border border-white bg-white/40 rounded-full mr-2"></div>
+              <div className="w-1.5 h-1.5 border border-white bg-white/40 rounded-full mt-1"></div>
             </div>
             <div className="absolute top-[60px] w-12 flex justify-center gap-1 z-20 opacity-0 animate-[bubbleRise_1s_8.2s_forwards]">
-               <div className="w-2 h-2 border border-white bg-white/40 rounded-full"></div>
-               <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-1"></div>
+              <div className="w-2 h-2 border border-white bg-white/40 rounded-full"></div>
+              <div className="w-1 h-1 border border-white bg-white/40 rounded-full mt-1"></div>
             </div>
 
             {/* Oil Bath Beaker */}
             <div className="relative w-44 h-28 border-2 border-t-0 border-gray-300 rounded-b-xl bg-gray-50 shadow-inner flex items-end justify-center">
-               <div className="w-full h-10 bg-amber-100/60 absolute bottom-0 rounded-b-[10px] border-t border-amber-200 flex justify-center z-0"></div>
-               
-               {/* Erlenmeyer inside */}
-               <div className="absolute bottom-0.5 w-32 h-40 flex items-end justify-center z-10">
-                 <ErlenmeyerFlask className="absolute inset-0 w-full h-full text-blue-300" liquidComponent={
-                   <path d={liquidPath} className="animate-[complexFormation_9s_forwards]" fill="#eff6ff" opacity="0.8" />
-                 } />
-                 {/* Stir bar */}
-                 <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20 animate-[perspectiveSpin_0.2s_linear_60_forwards]"></div>
-               </div>
+              <div className="w-full h-10 bg-amber-100/60 absolute bottom-0 rounded-b-[10px] border-t border-amber-200 flex justify-center z-0"></div>
+
+              {/* Erlenmeyer inside */}
+              <div className="absolute bottom-0.5 w-32 h-40 flex items-end justify-center z-10">
+                <ErlenmeyerFlask className="absolute inset-0 w-full h-full text-blue-300" liquidComponent={
+                  <path d={liquidPath} className="animate-[complexFormation_9s_forwards]" fill="#eff6ff" opacity="0.8" />
+                } />
+                {/* Stir bar */}
+                <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20 animate-[perspectiveSpin_0.2s_linear_60_forwards]"></div>
+              </div>
             </div>
           </div>
           <div className={hotplateClass}>
@@ -387,88 +384,88 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
       content = (
         <div className="flex flex-col items-center mt-6 h-56 justify-end relative">
           {/* Action Labels */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center w-max z-50">
-             <div className="text-xs bg-white px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 animate-[fadeInOut_8s_0.5s_forwards]">
-               Diamkan di suhu ruang
-             </div>
-             <div className="text-xs bg-cyan-50 px-3 py-1 rounded shadow-sm border border-cyan-200 text-cyan-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 animate-[fadeInOut_7s_8.5s_forwards]">
-               Rendam dalam penangas es
-             </div>
-             <div className="text-xs bg-purple-50 px-3 py-1 rounded shadow-sm border border-purple-200 text-purple-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 animate-[appear_1s_19s_forwards]">
-               Teteskan etanol PA
-             </div>
+          <div className="absolute top-2 inset-x-0 z-50">
+            <div className="text-[10px] sm:text-xs bg-white px-2 sm:px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium absolute top-0 left-1/2 -translate-x-1/2 text-center opacity-0 animate-[fadeInOut_8s_0.5s_forwards]">
+              Diamkan di suhu ruang
+            </div>
+            <div className="text-[10px] sm:text-xs bg-cyan-50 px-2 sm:px-3 py-1 rounded shadow-sm border border-cyan-200 text-cyan-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 text-center opacity-0 animate-[fadeInOut_7s_8.5s_forwards]">
+              Rendam dalam penangas es
+            </div>
+            <div className="text-[10px] sm:text-xs bg-purple-50 px-2 sm:px-3 py-1 rounded shadow-sm border border-purple-200 text-purple-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 text-center opacity-0 animate-[appear_1s_19s_forwards]">
+              Teteskan etanol PA
+            </div>
           </div>
 
           {/* Container for flask + ice bath positioned above table */}
           <div className="relative flex justify-center items-end w-full" style={{ height: '200px' }}>
 
             {/* Ice Bath - slides in then slides out */}
-            <div className="absolute bottom-0 left-1/2 w-48 h-24 border-2 border-t-0 border-cyan-200 rounded-b-2xl bg-cyan-100/40 shadow-inner opacity-0 animate-[iceBathLifeCycle_25s_forwards] -translate-x-14">
-               <div className="absolute inset-0 opacity-60 z-0 overflow-hidden rounded-b-2xl">
-                  <div className="absolute bottom-2 left-6 w-8 h-8 bg-white border border-cyan-100 rounded rotate-12"></div>
-                  <div className="absolute bottom-4 right-8 w-10 h-10 bg-white border border-cyan-100 rounded -rotate-6"></div>
-                  <div className="absolute bottom-3 left-16 w-7 h-7 bg-white border border-cyan-100 rounded rotate-45"></div>
-                  <div className="absolute bottom-5 right-16 w-6 h-6 bg-white border border-cyan-100 rounded rotate-12"></div>
-               </div>
+            <div className="absolute bottom-0 left-1/2 w-40 sm:w-48 h-20 sm:h-24 border-2 border-t-0 border-cyan-200 rounded-b-2xl bg-cyan-100/40 shadow-inner opacity-0 animate-[iceBathLifeCycle_25s_forwards] -translate-x-12 sm:-translate-x-14">
+              <div className="absolute inset-0 opacity-60 z-0 overflow-hidden rounded-b-2xl">
+                <div className="absolute bottom-2 left-4 sm:left-6 w-6 sm:w-8 h-6 sm:h-8 bg-white border border-cyan-100 rounded rotate-12"></div>
+                <div className="absolute bottom-3 sm:bottom-4 right-6 sm:right-8 w-8 sm:w-10 h-8 sm:h-10 bg-white border border-cyan-100 rounded -rotate-6"></div>
+                <div className="absolute bottom-2 sm:bottom-3 left-12 sm:left-16 w-5 sm:w-7 h-5 sm:h-7 bg-white border border-cyan-100 rounded rotate-45"></div>
+                <div className="absolute bottom-4 sm:bottom-5 right-12 sm:right-16 w-5 sm:w-6 h-5 sm:h-6 bg-white border border-cyan-100 rounded rotate-12"></div>
+              </div>
             </div>
 
             {/* Flask group - moves independently */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-14 flex justify-center items-end z-30 animate-[flaskLifeCycle_25s_forwards]">
-               {/* Ethanol Pipette */}
-               <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-0 animate-[dropPipette_6s_19s_forwards] z-30">
-                 <div className="w-2.5 h-12 bg-white/60 border border-gray-400 rounded-t-full rounded-b-sm flex justify-center items-end pb-0.5 overflow-hidden">
-                   <div className="w-full bg-purple-300/80 rounded-b-sm origin-bottom" style={{ animation: 'pipetteEmpty 5.5s linear 19.5s forwards', height: '100%' }}></div>
-                 </div>
-                 <div className="w-0.5 h-2 bg-gray-400 mt-[1px]"></div>
-                 {/* Drops */}
-                 <div className="absolute -bottom-2 w-1.5 h-2 bg-purple-400/80 rounded-full opacity-0" style={{ animation: 'dropLiquid 1.2s ease-in 19.5s 5 forwards' }}></div>
-               </div>
+            <div className="absolute bottom-0 left-1/2 -translate-x-12 sm:-translate-x-14 flex justify-center items-end z-30 animate-[flaskLifeCycle_25s_forwards]">
+              {/* Ethanol Pipette */}
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-0 animate-[dropPipette_6s_19s_forwards] z-30">
+                <div className="w-2.5 h-12 bg-white/60 border border-gray-400 rounded-t-full rounded-b-sm flex justify-center items-end pb-0.5 overflow-hidden">
+                  <div className="w-full bg-purple-300/80 rounded-b-sm origin-bottom" style={{ animation: 'pipetteEmpty 5.5s linear 19.5s forwards', height: '100%' }}></div>
+                </div>
+                <div className="w-0.5 h-2 bg-gray-400 mt-[1px]"></div>
+                {/* Drops */}
+                <div className="absolute -bottom-2 w-1.5 h-2 bg-purple-400/80 rounded-full opacity-0" style={{ animation: 'dropLiquid 1.2s ease-in 19.5s 5 forwards' }}></div>
+              </div>
 
-               {/* Erlenmeyer */}
-               <div className="relative w-32 h-40 flex items-end justify-center z-10">
-                 <ErlenmeyerFlask liquidComponent={
-                   <path d={liquidPath} fill="#294524" opacity="1" className="animate-[solutionColorChange_25s_forwards]" />
-                 } />
-                 {/* Crystals forming - bluish green */}
-                 <div className="absolute bottom-2 w-[70%] h-10 z-0 flex flex-wrap items-end justify-center pb-1 gap-1 opacity-0 animate-[appear_4s_21s_forwards]">
-                   <div className="w-2.5 h-2.5 bg-teal-500/90 rotate-45"></div>
-                   <div className="w-3 h-3 bg-cyan-700/80 rotate-12"></div>
-                   <div className="w-2.5 h-3 bg-teal-600/90 rotate-180"></div>
-                   <div className="w-3 h-2.5 bg-cyan-600/80 -rotate-12"></div>
-                   <div className="w-2 h-2 bg-teal-400/90 rotate-45"></div>
-                   <div className="w-3.5 h-3 bg-cyan-800/80 rotate-90"></div>
-                 </div>
-                 {/* Stir bar stopped */}
-                 <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20"></div>
-               </div>
+              {/* Erlenmeyer */}
+              <div className="relative w-24 sm:w-32 h-32 sm:h-40 flex items-end justify-center z-10">
+                <ErlenmeyerFlask liquidComponent={
+                  <path d={liquidPath} fill="#294524" opacity="1" className="animate-[solutionColorChange_25s_forwards]" />
+                } />
+                {/* Crystals forming - bluish green */}
+                <div className="absolute bottom-2 w-[70%] h-10 z-0 flex flex-wrap items-end justify-center pb-1 gap-1 opacity-0 animate-[appear_4s_21s_forwards]">
+                  <div className="w-2.5 h-2.5 bg-teal-500/90 rotate-45"></div>
+                  <div className="w-3 h-3 bg-cyan-700/80 rotate-12"></div>
+                  <div className="w-2.5 h-3 bg-teal-600/90 rotate-180"></div>
+                  <div className="w-3 h-2.5 bg-cyan-600/80 -rotate-12"></div>
+                  <div className="w-2 h-2 bg-teal-400/90 rotate-45"></div>
+                  <div className="w-3.5 h-3 bg-cyan-800/80 rotate-90"></div>
+                </div>
+                {/* Stir bar stopped */}
+                <div className="absolute bottom-3 w-7 h-2.5 bg-white rounded-full border border-gray-300 z-20"></div>
+              </div>
             </div>
 
             {/* Thermometer - stationary, independent of flask */}
-            <div className="absolute bottom-2 right-4 flex flex-col items-center opacity-0 animate-[appear_1s_2s_forwards] z-40">
-               <div className="relative w-3 h-16 bg-white rounded-t-full border-2 border-b-0 border-gray-300 flex items-end p-[1px] z-10">
-                  <div className="w-full rounded-t-full origin-bottom animate-[coolDownBar_16s_forwards]" style={{ height: '90%' }}></div>
-               </div>
-               <div className="w-5 h-5 rounded-full border-2 border-gray-300 z-20 relative -mt-1 flex items-center justify-center animate-[coolDownColor_16s_forwards]">
-                  <div className="w-2 h-2 bg-white rounded-full absolute top-0.5 right-0.5 opacity-40"></div>
-               </div>
+            <div className="absolute bottom-2 right-2 sm:right-4 flex flex-col items-center opacity-0 animate-[appear_1s_2s_forwards] z-40">
+              <div className="relative w-2.5 sm:w-3 h-12 sm:h-16 bg-white rounded-t-full border-2 border-b-0 border-gray-300 flex items-end p-[1px] z-10">
+                <div className="w-full rounded-t-full origin-bottom animate-[coolDownBar_16s_forwards]" style={{ height: '90%' }}></div>
+              </div>
+              <div className="w-4 sm:w-5 h-4 sm:h-5 rounded-full border-2 border-gray-300 z-20 relative -mt-1 flex items-center justify-center animate-[coolDownColor_16s_forwards]">
+                <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full absolute top-0.5 right-0.5 opacity-40"></div>
+              </div>
 
-               {/* Thermometer Labels */}
-               <div className="absolute top-4 left-6 w-max z-30">
-                  <div className="text-[10px] px-2 py-1 rounded shadow-sm border font-medium whitespace-nowrap absolute top-0 left-0 animate-[coolDownText_16s_forwards]">
-                    Suhu: ~<TemperatureCounter sequence={[
-                      { temp: 70, time: 0 },
-                      { temp: 70, time: 3000 },
-                      { temp: 25, time: 7000 },
-                      { temp: 25, time: 11000 },
-                      { temp: 5, time: 16000 }
-                    ]} />°C
-                  </div>
-               </div>
+              {/* Thermometer Labels */}
+              <div className="absolute top-2 sm:top-4 right-0 sm:right-auto sm:left-6 z-30">
+                <div className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded shadow-sm border font-medium absolute top-0 right-0 sm:right-auto sm:left-0 animate-[coolDownText_16s_forwards]">
+                  Suhu: ~<TemperatureCounter sequence={[
+                    { temp: 70, time: 0 },
+                    { temp: 70, time: 3000 },
+                    { temp: 25, time: 7000 },
+                    { temp: 25, time: 11000 },
+                    { temp: 5, time: 16000 }
+                  ]} />°C
+                </div>
+              </div>
             </div>
           </div>
-          
+
           {/* Table Surface */}
-          <div className="w-56 h-2 bg-slate-200 rounded-full mt-1 shadow-sm relative z-0"></div>
+          <div className="w-44 sm:w-56 h-2 bg-slate-200 rounded-full mt-1 shadow-sm relative z-0"></div>
         </div>
       );
       break;
@@ -477,13 +474,13 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
       content = (
         <div className="flex flex-col items-center mt-6 h-56 justify-end relative">
           {/* Action Labels */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center w-max z-50">
-             <div className="text-xs bg-white px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 animate-[fadeInOut_6s_0.5s_forwards]">
-               Saring dengan corong Buchner
-             </div>
-             <div className="text-xs bg-teal-50 px-3 py-1 rounded shadow-sm border border-teal-200 text-teal-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 animate-[appear_1s_7s_forwards]">
-               Cuci kristal &amp; keringkan
-             </div>
+          <div className="absolute top-2 inset-x-0 z-50">
+            <div className="text-[10px] sm:text-xs bg-white px-2 sm:px-3 py-1 rounded shadow-sm border border-gray-100 text-gray-700 font-medium absolute top-0 left-1/2 -translate-x-1/2 text-center opacity-0 animate-[fadeInOut_6s_0.5s_forwards]">
+              Saring dengan corong Buchner
+            </div>
+            <div className="text-[10px] sm:text-xs bg-teal-50 px-2 sm:px-3 py-1 rounded shadow-sm border border-teal-200 text-teal-800 font-medium absolute top-0 left-1/2 -translate-x-1/2 text-center opacity-0 animate-[appear_1s_7s_forwards]">
+              Cuci kristal &amp; keringkan
+            </div>
           </div>
 
           <div className="relative flex justify-center items-end" style={{ height: '190px' }}>
@@ -504,7 +501,7 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
             <div className="absolute left-12 top-6 w-0.5 h-8 bg-yellow-300/50 z-30 opacity-0 animate-[liquidStream_8s_1s_forwards] origin-top"></div>
 
             {/* Complete Buchner Funnel Assembly - single SVG */}
-            <svg viewBox="0 0 160 200" className="w-40 h-[190px]" style={{ overflow: 'visible' }}>
+            <svg viewBox="0 0 160 200" className="w-32 sm:w-40 h-[160px] sm:h-[190px]" style={{ overflow: 'visible' }}>
               {/* === BUCHNER FUNNEL === */}
               {/* Funnel bowl */}
               <path d="M30 10 L25 40 L135 40 L130 10 Z" fill="white" stroke="#9ca3af" strokeWidth="2" />
@@ -560,7 +557,7 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
           </div>
 
           {/* Table Surface */}
-          <div className="w-56 h-2 bg-slate-200 rounded-full mt-1 shadow-sm relative z-0"></div>
+          <div className="w-44 sm:w-56 h-2 bg-slate-200 rounded-full mt-1 shadow-sm relative z-0"></div>
         </div>
       );
       break;
@@ -582,6 +579,11 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
           0% { opacity: 0; transform: translateY(10px) translateX(-50%); }
           15%, 85% { opacity: 1; transform: translateY(0) translateX(-50%); }
           100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+        }
+        @keyframes fadeInOutCentered {
+          0% { opacity: 0; transform: translateY(10px); }
+          15%, 85% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-10px); }
         }
         @keyframes dropPowder {
           0% { opacity: 0; transform: translateY(-10px); }
@@ -635,13 +637,13 @@ function ProcedureVisual({ visualState }: { visualState: string }) {
           100% { transform: translateX(-50%) translateY(0); }
         }
         @keyframes iceBathLifeCycle {
-          0%, 34% { transform: translateX(calc(-50% - 200px)); opacity: 0; }
+          0%, 34% { transform: translateX(calc(-50% - 120px)); opacity: 0; }
           36% { opacity: 1; }
           40% { transform: translateX(-50%); opacity: 1; }
           66% { transform: translateX(-50%); opacity: 1; }
           70% { opacity: 1; }
-          74% { transform: translateX(calc(-50% + 200px)); opacity: 0; }
-          100% { transform: translateX(calc(-50% + 200px)); opacity: 0; }
+          74% { transform: translateX(calc(-50% + 120px)); opacity: 0; }
+          100% { transform: translateX(calc(-50% + 120px)); opacity: 0; }
         }
         @keyframes solutionColorChange {
           0%, 76% { fill: #294524; opacity: 1; }
